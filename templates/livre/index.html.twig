@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Livres{% endblock %}
+
+{% block body %}
+    <h1>Livres</h1>
+	<div class="container" id="container-params">
+		<div class="row">
+			<div class="col" id="col1">
+				<form method="POST" onsubmit="chercher(event)" class="form1">
+					<span>Chercher par Titre</span>
+					<input id="motCle" type="text" class="form-control form-control-sm">
+					<button class="btn btn-primary my-2">Recherche</button>
+				</form>
+			
+				<form method="POST" onsubmit="list(event)" class="form2">
+					<span>Les livres dont la date de parution est comprise entre deux années
+					</span>
+					<input id="dateMin" type="number" class="form-control form-control-sm">
+					<input id="dateMax" type="number" class="form-control form-control-sm">
+					<button class="btn btn-primary my-2">Lister</button>
+				</form>
+			</div>
+
+			<div class="col">
+				<span>Filtrer selon</span>
+				<select class="form-select form-select-sm mt-2" onchange="filtrerParNote(event)">
+					<option selected>Note</option>
+					{% for i in 0..20 %}
+						<option value="{{ i }}">{{ i }}</option>
+					{% endfor %}
+				</select>
+				<select class="form-select form-select-sm mt-2" onchange="filtrerParDate(event)">
+					<option selected>Date de publication</option>
+					{% for date in dates|sort  %}
+						<option value="{{date.date_de_parution|date("Y-m-d")}}">{{date.date_de_parution|date("m/d/Y")}}</option>
+					{% endfor %}
+				</select>
+				<select class="form-select form-select-sm mt-2" onchange="filtrerParAuteur(event)">
+					<option selected>Auteur</option>
+					{% for auteur in auteurs %}
+						<option value="{{auteur.id}}">{{auteur.nomPrenom}}</option>
+					{% endfor %}
+				</select>
+				<select class="form-select form-select-sm mt-2" onchange="filtrerParGenre(event)">
+					<option selected>Genre</option>
+					{% for genre in genres %}
+						<option value="{{genre.id}}">{{genre.nom}}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+	</div>
+	<table id="livres" class="table mt-5">
+		<thead class="table-dark">
+			<tr>
+				<th>Isbn</th>
+				<th>Titre</th>
+				<th>Nombre de pages</th>
+				<th>Date de parution</th>
+				<th>Note</th>
+				<th style="width: 25%;"></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for livre in livres %}
+				<tr>
+					<td>{{ livre.isbn }}</td>
+					<td>{{ livre.titre }}</td>
+					<td>{{ livre.nombrePages }}</td>
+					<td>{{ livre.dateDeParution ? livre.dateDeParution|date('Y-m-d') : '' }}</td>
+
+					<td>
+						<span id="livre-note-{{ livre.id }}">{{ livre.note }}</span>
+					</td>
+
+
+					<td>
+						<a class="btn btn-primary" href="{{ path('livre_show', {'id': livre.id}) }}">Afficher</a>
+						{% if is_granted('ROLE_ADMIN') %}
+							<a class="btn btn-success" href="{{ path('livre_edit', {'id': livre.id}) }}">Modifier</a>
+							{{ include('livre/_delete_form.html.twig') }}
+						{% endif %}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="7">Aucun résultat</td>
+				</tr>
+			{% endfor %}
+
+		</tbody>
+	</table>
+	{% if is_granted('ROLE_ADMIN') %}
+		<a class="btn btn-primary btn-adds" href="{{ path('livre_new') }}">Ajouter</a>
+	{% endif %}
+{% endblock %}
+{% block javascripts %}
+	<script src="/js/main.js"></script>
+{% endblock %}

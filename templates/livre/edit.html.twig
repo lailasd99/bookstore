@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Livre{% endblock %}
+
+{% block body %}
+    <h1>Modifier un Livre</h1>
+
+    {{ include('livre/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <a class="btn btn-primary btn-adds"href="{{ path('livre_index') }}">Retour</a>
+
+    {{ include('livre/_delete_form.html.twig') }}
+{% endblock %}

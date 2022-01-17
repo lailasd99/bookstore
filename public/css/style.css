@@ -1,0 +1,62 @@
+body{
+    font-size: 15px;
+}
+
+#container-params{
+    margin: 50px 0;
+    background-color: #F8F9FA;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+#col1{
+    margin-right: 40px;
+}
+
+.form2{
+    margin-top: 20px;
+}
+
+#tableA{
+    margin: 50px 0;
+}
+
+#tableG{
+    margin: 50px 0;
+}
+.navbar-nav {
+    position: absolute !important;
+    left: 50% !important;
+    transform: translatex(-50%) !important;
+}
+
+.navbar-brand{
+    margin-left: 25px;
+}
+
+#btn-sign{
+    margin-top: 20px;
+    width: 150px;
+    height: 40px;
+    font-size: 15px;
+}
+
+#login-form{
+    width: 50% !important;
+}
+
+.btn-adds{
+    margin-bottom: 25px !important;
+}
+
+.btn-up{
+    margin-top: 25px !important;
+}
+
+.form-ajout{
+    margin-top: 50px;
+    width: 60%;
+    position:absolute;
+    left: 50% !important;
+    transform: translatex(-50%) !important;
+}
